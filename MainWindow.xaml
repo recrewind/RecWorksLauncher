@@ -1,0 +1,312 @@
+﻿<Window x:Class="RecWorksLauncher.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="RecWorks Launcher"
+        Width="1240" Height="780"
+        MinWidth="980" MinHeight="660"
+        Background="#111318" Foreground="#F1F3F6"
+        FontFamily="Segoe UI"
+        WindowStartupLocation="CenterScreen">
+
+	<Window.Resources>
+		<SolidColorBrush x:Key="Sidebar" Color="#17191F"/>
+		<SolidColorBrush x:Key="Panel" Color="#20232A"/>
+		<SolidColorBrush x:Key="Line" Color="#343841"/>
+		<SolidColorBrush x:Key="Muted" Color="#A6ABB5"/>
+		<SolidColorBrush x:Key="Orange" Color="#F47B35"/>
+
+		<Style x:Key="NavButton" TargetType="Button">
+			<Setter Property="Foreground" Value="#B9C2CE"/>
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="BorderThickness" Value="0"/>
+			<Setter Property="HorizontalContentAlignment" Value="Left"/>
+			<Setter Property="Padding" Value="13,10"/>
+			<Setter Property="FontSize" Value="13"/>
+			<Setter Property="Cursor" Value="Hand"/>
+			<Setter Property="Margin" Value="0,2"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="Button">
+						<Border x:Name="Bd" Background="{TemplateBinding Background}" CornerRadius="4" Padding="{TemplateBinding Padding}">
+							<ContentPresenter VerticalAlignment="Center"/>
+						</Border>
+						<ControlTemplate.Triggers>
+							<Trigger Property="IsMouseOver" Value="True">
+								<Setter TargetName="Bd" Property="Background" Value="#292D35"/>
+								<Setter Property="Foreground" Value="White"/>
+							</Trigger>
+							<Trigger Property="IsPressed" Value="True">
+								<Setter TargetName="Bd" Property="Background" Value="#373C46"/>
+							</Trigger>
+						</ControlTemplate.Triggers>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+
+		<Style x:Key="ActionButton" TargetType="Button">
+			<Setter Property="Background" Value="#2A2E37"/>
+			<Setter Property="Foreground" Value="#F0F2F5"/>
+			<Setter Property="BorderBrush" Value="#414651"/>
+			<Setter Property="BorderThickness" Value="1"/>
+			<Setter Property="Padding" Value="16,9"/>
+			<Setter Property="FontSize" Value="13"/>
+			<Setter Property="FontWeight" Value="SemiBold"/>
+			<Setter Property="Cursor" Value="Hand"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="Button">
+						<Border x:Name="Bd" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="4" Padding="{TemplateBinding Padding}">
+							<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+						</Border>
+						<ControlTemplate.Triggers>
+							<Trigger Property="IsMouseOver" Value="True">
+								<Setter TargetName="Bd" Property="Background" Value="#373C46"/>
+							</Trigger>
+							<Trigger Property="IsPressed" Value="True">
+								<Setter TargetName="Bd" Property="Background" Value="#414752"/>
+							</Trigger>
+							<Trigger Property="IsEnabled" Value="False">
+								<Setter TargetName="Bd" Property="Opacity" Value="0.48"/>
+							</Trigger>
+						</ControlTemplate.Triggers>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+
+		<Style x:Key="PrimaryButton" TargetType="Button" BasedOn="{StaticResource ActionButton}">
+			<Setter Property="Background" Value="#F47B35"/>
+			<Setter Property="Foreground" Value="#17130F"/>
+			<Setter Property="BorderBrush" Value="#F47B35"/>
+		</Style>
+	</Window.Resources>
+
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="232"/>
+			<ColumnDefinition Width="*"/>
+		</Grid.ColumnDefinitions>
+
+		<!-- Sidebar -->
+		<Border Grid.Column="0" Background="{StaticResource Sidebar}" BorderBrush="#252C36" BorderThickness="0,0,1,0">
+			<Grid Margin="17,22,17,17">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="18"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="Auto"/>
+				</Grid.RowDefinitions>
+
+				<StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center">
+					<Border Width="38" Height="38" Background="{StaticResource Orange}" CornerRadius="8" Margin="0,0,10,0">
+						<TextBlock Text="R" Foreground="#17130F" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+					</Border>
+					<StackPanel VerticalAlignment="Center">
+						<TextBlock Text="RecWorks Launcher" FontSize="17" FontWeight="SemiBold" Foreground="White"/>
+						<TextBlock Text="GAME LAUNCHER" FontSize="9" Foreground="{StaticResource Muted}"/>
+					</StackPanel>
+				</StackPanel>
+
+				<StackPanel Grid.Row="2">
+					<TextBlock Text="YOUR LIBRARY" FontSize="10" FontWeight="SemiBold" Foreground="#758294" Margin="4,0,0,7"/>
+					<Button Content="▦    Home" Style="{StaticResource NavButton}" Click="Home_Click"/>
+					<Button Content="RecWorks" AutomationProperties.Name="Launch RecWorks" Style="{StaticResource NavButton}" Click="Play_Click"/>
+				</StackPanel>
+
+				<StackPanel Grid.Row="3" Margin="0,14,0,0">
+					<TextBlock Text="MANAGE" FontSize="10" FontWeight="SemiBold" Foreground="#758294" Margin="4,0,0,7"/>
+					<Button Content="↓    Install / Repair" Style="{StaticResource NavButton}" Click="Install_Click"/>
+					<Button Content="↻    Install / Update" Style="{StaticResource NavButton}" Click="Update_Click"/>
+				</StackPanel>
+
+				<StackPanel Grid.Row="5">
+					<Border Height="1" Background="#252C36" Margin="0,0,0,12"/>
+					<Button Content="⚙    Settings" Style="{StaticResource NavButton}" Click="Settings_Click"/>
+					<TextBlock Text="RECWORKS  •  VERSION 1.0" FontSize="10" Foreground="#758294" Margin="13,9,0,0"/>
+				</StackPanel>
+			</Grid>
+		</Border>
+
+		<!-- Main content -->
+		<Grid Grid.Column="1" Margin="32,24,32,24">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="42"/>
+				<RowDefinition Height="*"/>
+			</Grid.RowDefinitions>
+
+			<Grid Grid.Row="0" Margin="0,0,0,15">
+				<TextBlock x:Name="PageHeaderText" Text="RecWorks" FontSize="14" FontWeight="SemiBold" Foreground="#C7CFD9" VerticalAlignment="Center"/>
+				<Border HorizontalAlignment="Right" Background="#202733" CornerRadius="5" Padding="8,5">
+					<StackPanel Orientation="Horizontal">
+						<Border Width="22" Height="22" CornerRadius="11" Background="#F47B35">
+							<TextBlock Text="R" Foreground="#17130F" FontWeight="Bold" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+						</Border>
+						<TextBlock Text=" Player" FontSize="12" Foreground="#DCE2EA" VerticalAlignment="Center" Margin="6,0,2,0"/>
+					</StackPanel>
+				</Border>
+			</Grid>
+
+			<Grid Grid.Row="1">
+				<ScrollViewer x:Name="HomePage" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+					<StackPanel MaxWidth="850" HorizontalAlignment="Stretch">
+
+						<!-- Cover art area: custom native shapes, no external asset required -->
+						<Border Height="218" CornerRadius="6" ClipToBounds="True" Margin="0,0,0,18">
+							<Grid>
+								<Grid.Background>
+									<LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+										<GradientStop Color="#273746" Offset="0"/>
+										<GradientStop Color="#1C2632" Offset="0.58"/>
+										<GradientStop Color="#51301F" Offset="1"/>
+									</LinearGradientBrush>
+								</Grid.Background>
+								<Canvas IsHitTestVisible="False" Opacity="0.45">
+									<Ellipse Width="190" Height="190" Canvas.Left="450" Canvas.Top="-65" Fill="#3E5364"/>
+									<Ellipse Width="120" Height="120" Canvas.Left="560" Canvas.Top="70" Fill="#F47B35" Opacity="0.42"/>
+									<Ellipse Width="235" Height="235" Canvas.Left="630" Canvas.Top="-105" Stroke="#8294A6" StrokeThickness="2"/>
+									<Rectangle Width="280" Height="1" Canvas.Left="430" Canvas.Top="143" Fill="#A4B0BE" RenderTransformOrigin="0.5,0.5">
+										<Rectangle.RenderTransform>
+											<RotateTransform Angle="-24"/>
+										</Rectangle.RenderTransform>
+									</Rectangle>
+									<Rectangle Width="260" Height="1" Canvas.Left="530" Canvas.Top="64" Fill="#A4B0BE" RenderTransformOrigin="0.5,0.5">
+										<Rectangle.RenderTransform>
+											<RotateTransform Angle="27"/>
+										</Rectangle.RenderTransform>
+									</Rectangle>
+								</Canvas>
+								<Border Background="#72090D13"/>
+								<StackPanel VerticalAlignment="Bottom" Margin="22,0,22,19">
+									<TextBlock Text="RECWORKS  /  GAME LIBRARY" FontSize="10" FontWeight="SemiBold" Foreground="#F6A16E" Margin="0,0,0,7"/>
+									<TextBlock Text="RecWorks" FontSize="36" FontWeight="SemiBold" Foreground="White"/>
+									<TextBlock Text="Your next session starts here." FontSize="14" Foreground="#D4DCE5" Margin="0,4,0,0"/>
+								</StackPanel>
+							</Grid>
+						</Border>
+
+						<!-- One installation card -->
+						<Border Background="{StaticResource Panel}" BorderBrush="{StaticResource Line}" BorderThickness="1" CornerRadius="6" Padding="22" Margin="0,0,0,16">
+							<StackPanel>
+								<Grid Margin="0,0,0,14">
+									<TextBlock Text="Installation" FontSize="16" FontWeight="SemiBold" Foreground="#F1F3F6"/>
+									<TextBlock x:Name="EtaText" Text="Ready when you are" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="12" Foreground="{StaticResource Muted}"/>
+								</Grid>
+
+								<Grid Margin="0,0,0,8">
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="*"/>
+										<ColumnDefinition Width="Auto"/>
+									</Grid.ColumnDefinitions>
+									<TextBlock x:Name="StatusText" Text="Ready to install RecWorks" FontSize="14" FontWeight="SemiBold" Foreground="White" VerticalAlignment="Center"/>
+									<StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+										<Button x:Name="CancelButton" Content="Cancel" Style="{StaticResource ActionButton}" Visibility="Collapsed" Click="Cancel_Click" Margin="0,0,8,0"/>
+										<Button x:Name="InstallButton" AutomationProperties.Name="Install or repair RecWorks" Content="Install" Style="{StaticResource PrimaryButton}" MinWidth="105" Click="Install_Click"/>
+										<Button x:Name="PlayButton" AutomationProperties.Name="Play RecWorks" Content="Play" Style="{StaticResource PrimaryButton}" MinWidth="105" Visibility="Collapsed" Click="Play_Click"/>
+									</StackPanel>
+								</Grid>
+
+								<Grid Height="22" Margin="0,0,0,8">
+									<ProgressBar x:Name="InstallProgressBar" Minimum="0" Maximum="100" Value="0" Height="8" VerticalAlignment="Center" Background="#303946" Foreground="{StaticResource Orange}" BorderThickness="0"/>
+									<TextBlock x:Name="ProgressPercentText" Text="0%" FontSize="11" FontWeight="SemiBold" Foreground="#FFFFFF" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+								</Grid>
+
+								<Grid Margin="0,0,0,16">
+									<TextBlock x:Name="ActivityText" Text="Install RecWorks to get started." FontSize="12" Foreground="{StaticResource Muted}" TextWrapping="Wrap"/>
+									<TextBlock x:Name="DownloadSizeText" Text="" FontSize="11" Foreground="{StaticResource Muted}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="12,0,0,0"/>
+								</Grid>
+
+								<Border Height="1" Background="{StaticResource Line}" Margin="0,0,0,14"/>
+								<TextBlock Text="INSTALL LOCATION" FontSize="10" FontWeight="SemiBold" Foreground="#8793A3" Margin="0,0,0,6"/>
+								<Grid>
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="*"/>
+										<ColumnDefinition Width="Auto"/>
+									</Grid.ColumnDefinitions>
+									<TextBlock x:Name="InstallPathText" Text="Checking install folder..." FontSize="12" Foreground="#D4DCE5" VerticalAlignment="Center" TextWrapping="Wrap"/>
+									<Button Grid.Column="1" Content="Change" Style="{StaticResource ActionButton}" Padding="12,7" Margin="12,0,0,0" Click="Browse_Click"/>
+								</Grid>
+
+							</StackPanel>
+						</Border>
+
+
+					</StackPanel>
+				</ScrollViewer>
+
+				<!-- Real settings page -->
+				<ScrollViewer x:Name="SettingsPage" Visibility="Collapsed" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+					<StackPanel MaxWidth="850" HorizontalAlignment="Stretch">
+						<TextBlock Text="Settings" FontSize="28" FontWeight="SemiBold" Foreground="White" Margin="0,0,0,5"/>
+						<TextBlock Text="Manage where RecWorks is installed and how it launches." FontSize="13" Foreground="{StaticResource Muted}" Margin="0,0,0,22"/>
+
+						<Border Background="{StaticResource Panel}" BorderBrush="{StaticResource Line}" BorderThickness="1" CornerRadius="6" Padding="22" Margin="0,0,0,16">
+							<StackPanel>
+								<TextBlock Text="Game installation" FontSize="16" FontWeight="SemiBold" Foreground="White" Margin="0,0,0,5"/>
+								<TextBlock Text="Choose the folder where the launcher installs and looks for RecWorks." FontSize="12" Foreground="{StaticResource Muted}" TextWrapping="Wrap" Margin="0,0,0,14"/>
+								<TextBlock Text="INSTALL LOCATION" FontSize="10" FontWeight="SemiBold" Foreground="#8793A3" Margin="0,0,0,6"/>
+								<Grid>
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="*"/>
+										<ColumnDefinition Width="Auto"/>
+									</Grid.ColumnDefinitions>
+									<TextBox x:Name="SettingsInstallPathText" IsReadOnly="True" Background="#111720" Foreground="#D4DCE5" BorderBrush="{StaticResource Line}" Padding="10,8" VerticalContentAlignment="Center"/>
+									<Button Grid.Column="1" Content="Browse..." Style="{StaticResource ActionButton}" Margin="10,0,0,0" Click="Browse_Click"/>
+								</Grid>
+							</StackPanel>
+						</Border>
+
+						<Border Background="{StaticResource Panel}" BorderBrush="{StaticResource Line}" BorderThickness="1" CornerRadius="6" Padding="22" Margin="0,0,0,16">
+							<StackPanel>
+								<TextBlock Text="Appearance and accessibility" FontSize="16" FontWeight="SemiBold" Foreground="White" Margin="0,0,0,5"/>
+								<TextBlock Text="Choose the launcher background and adjust text contrast and size." FontSize="12" Foreground="{StaticResource Muted}" TextWrapping="Wrap" Margin="0,0,0,14"/>
+
+								<TextBlock Text="LAUNCHER BACKGROUND" FontSize="10" FontWeight="SemiBold" Foreground="#8793A3" Margin="0,0,0,6"/>
+								<ComboBox x:Name="BackgroundThemeComboBox" SelectedIndex="0" MinHeight="34" Padding="8,5" Margin="0,0,0,14"
+										  Background="#111720" Foreground="#D4DCE5" BorderBrush="{StaticResource Line}"
+										  ToolTip="Choose the launcher background colour.">
+									<ComboBoxItem Content="Rec Room blue"/>
+									<ComboBoxItem Content="Midnight"/>
+									<ComboBoxItem Content="Charcoal"/>
+								</ComboBox>
+
+								<TextBlock Text="TEXT SIZE" FontSize="10" FontWeight="SemiBold" Foreground="#8793A3" Margin="0,0,0,6"/>
+								<ComboBox x:Name="TextScaleComboBox" SelectedIndex="0" MinHeight="34" Padding="8,5" Margin="0,0,0,14"
+										  Background="#111720" Foreground="#D4DCE5" BorderBrush="{StaticResource Line}"
+										  ToolTip="Increase text size across the launcher.">
+									<ComboBoxItem Content="100% — Default"/>
+									<ComboBoxItem Content="115% — Larger"/>
+									<ComboBoxItem Content="130% — Largest"/>
+								</ComboBox>
+
+								<CheckBox x:Name="HighContrastCheckBox" Content="High contrast text" Foreground="#D4DCE5" Margin="0,0,0,8"
+										  ToolTip="Use stronger text contrast for improved readability."/>
+								<TextBlock Text="Changes apply when you save settings. All controls can be reached with the keyboard using Tab and Shift+Tab."
+										   FontSize="11" Foreground="{StaticResource Muted}" TextWrapping="Wrap" Margin="0,4,0,0"/>
+							</StackPanel>
+						</Border>
+
+						<Border Background="{StaticResource Panel}" BorderBrush="{StaticResource Line}" BorderThickness="1" CornerRadius="6" Padding="22" Margin="0,0,0,16">
+							<StackPanel>
+								<TextBlock Text="Launch options" FontSize="16" FontWeight="SemiBold" Foreground="White" Margin="0,0,0,5"/>
+								<TextBlock Text="Optional command-line arguments passed to RecWorks when it starts." FontSize="12" Foreground="{StaticResource Muted}" TextWrapping="Wrap" Margin="0,0,0,12"/>
+								<TextBlock Text="LAUNCH ARGUMENTS" FontSize="10" FontWeight="SemiBold" Foreground="#8793A3" Margin="0,0,0,6"/>
+								<TextBox x:Name="LaunchArgumentsTextBox" Background="#111720" Foreground="#D4DCE5" BorderBrush="{StaticResource Line}" Padding="10,8" FontSize="12" ToolTip="Leave blank unless the game requires launch arguments."/>
+								<CheckBox x:Name="CloseLauncherCheckBox" Content="Close RecWorks after the game launches" Foreground="#D4DCE5" Margin="0,16,0,0"/>
+								<TextBlock Text="Your settings are saved on this PC and reused next time you open the launcher." FontSize="11" Foreground="{StaticResource Muted}" TextWrapping="Wrap" Margin="0,12,0,0"/>
+							</StackPanel>
+						</Border>
+
+						<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,12">
+							<Button Content="Restore defaults" Style="{StaticResource ActionButton}" Click="RestoreSettings_Click" Margin="0,0,8,0"/>
+							<Button Content="Save settings" Style="{StaticResource PrimaryButton}" MinWidth="125" Click="SaveSettings_Click"/>
+						</StackPanel>
+						<TextBlock x:Name="SettingsFeedbackText" Foreground="#A9D7B4" FontSize="12" HorizontalAlignment="Right" Margin="0,0,0,12"/>
+					</StackPanel>
+				</ScrollViewer>
+			</Grid>
+		</Grid>
+	</Grid>
+</Window>
